@@ -242,9 +242,9 @@ int BigReal::sign()
 
 ostream& operator<<(ostream& out, BigReal& num)
 {
-	if(!num.sign()){
+	/*if(!num.sign() && num.intPart.sign() != 0) {
 		cout << '-';
-	}
+	}*/
 	out << num.intPart;
 	out << '.';
 	for (int i = num.decPart.size() - 1; i >= 0; i--) {
