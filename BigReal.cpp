@@ -137,7 +137,7 @@ BigReal BigReal::operator-(BigReal other)
 			result.decPart.push_back(cp.decPart[i] - other.decPart[i]);
 		}
 	}
-	else if (cp > other && other.sign() == 0) {
+	else if (cp > other && other.sign() == 0 && cp.sign() == 1) {
 		other.intPart.setNumber(other.intPart.getNumber());
 		result = cp + other;
 	}
@@ -150,13 +150,25 @@ BigReal BigReal::operator-(BigReal other)
 		cp.intPart.setNumber(cp.intPart.getNumber());
 		other.intPart.setNumber(other.intPart.getNumber());
 		result = cp - other;
+		//cp.intPart.setNumber('-' + cp.intPart.getNumber());
+		//other.intPart.setNumber('-' + other.intPart.getNumber());
 		result.intPart.setNumber('-' + result.intPart.getNumber());
 	}
 	else if (cp < other && other.sign() == 1 && cp.sign() == 0) {
 		cp.intPart.setNumber(cp.intPart.getNumber());
 		other.intPart.setNumber(other.intPart.getNumber());
 		result = cp + other;
+		cp.intPart.setNumber('-' + cp.intPart.getNumber());
+		other.intPart.setNumber('-' + other.intPart.getNumber());
 		result.intPart.setNumber('-' + result.intPart.getNumber());
+	}
+	else if (cp > other && other.sign() == 0 && cp.sign() == 0) {
+		other.intPart.setNumber(other.intPart.getNumber());
+		cp.intPart.setNumber(cp.intPart.getNumber());
+		result = other - cp;
+		cp.intPart.setNumber('-' + cp.intPart.getNumber());
+		other.intPart.setNumber('-' + other.intPart.getNumber());
+		//result.intPart.setNumber('-' + result.intPart.getNumber());
 	}
 	return result;
 }
@@ -170,14 +182,24 @@ bool BigReal::operator<(BigReal anotherReal)
 	while (cp.decPart.size() > anotherReal.decPart.size()) {
 		anotherReal.decPart.insert(anotherReal.decPart.begin(), 0);
 	}
-
+	
 	if (intPart < anotherReal.intPart) {
 		return true;
 	}
 	else if (intPart > anotherReal.intPart) {
 		return false;
 	}
-	else {
+	else if(intPart.sign()==0 && anotherReal.intPart.sign() == 0) {
+		int i = 0;
+		do
+		{
+			if (decPart[decPart.size() - i - 1] > anotherReal.decPart[anotherReal.decPart.size() - i - 1]) {
+				return true;
+			}
+			i++;
+		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i] && i < decPart.size());
+	}
+	else  {
 		int i = 0;
 		do
 		{
@@ -187,7 +209,6 @@ bool BigReal::operator<(BigReal anotherReal)
 			i++;
 		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i] && i < decPart.size());
 	}
-
 	return false;
 }
 
@@ -207,6 +228,16 @@ bool BigReal::operator>(BigReal anotherReal)
 	else if (intPart < anotherReal.intPart) {
 		return false;
 	}
+	else if (intPart.sign() == 0 && anotherReal.intPart.sign() == 0) {
+		int i = 0;
+		do
+		{
+			if (decPart[decPart.size() - i - 1] < anotherReal.decPart[anotherReal.decPart.size() - i - 1]) {
+				return true;
+			}
+			i++;
+		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i] && i < decPart.size());
+	}
 	else {
 		int i = 0;
 		do
@@ -216,7 +247,6 @@ bool BigReal::operator>(BigReal anotherReal)
 			}
 			i++;
 		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i] && i < decPart.size());
-
 	}
 
 	return false;
@@ -242,9 +272,6 @@ int BigReal::sign()
 
 ostream& operator<<(ostream& out, BigReal& num)
 {
-	/*if(!num.sign() && num.intPart.sign() != 0) {
-		cout << '-';
-	}*/
 	out << num.intPart;
 	out << '.';
 	for (int i = num.decPart.size() - 1; i >= 0; i--) {

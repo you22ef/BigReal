@@ -352,14 +352,10 @@ ostream& operator << (ostream& out, BigDecimalInt num)
     }
     else
     {
-        if (num.number == "0")
-        {
-            out << num.number;
-        }
-        else
-        {
-            out << num.signNumber << num.number;
-        }
+        
+       
+        out << num.signNumber << num.number;
+        
     }
     return out;
 }

@@ -20,7 +20,7 @@ using namespace std;
 
 class BigDecimalInt {
 private:
-    string number, fraction;
+    string number;
     char signNumber;
     bool checkValidInput(string input);
 
