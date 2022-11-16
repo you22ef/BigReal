@@ -163,6 +163,13 @@ BigReal BigReal::operator-(BigReal other)
 
 bool BigReal::operator<(BigReal anotherReal)
 {
+	BigReal cp = *this;
+	while (cp.decPart.size() < anotherReal.decPart.size()) {
+		cp.decPart.insert(cp.decPart.begin(), 0);
+	}
+	while (cp.decPart.size() > anotherReal.decPart.size()) {
+		anotherReal.decPart.insert(anotherReal.decPart.begin(), 0);
+	}
 	
 	if (intPart < anotherReal.intPart ) {
 		return true;
@@ -186,6 +193,13 @@ bool BigReal::operator<(BigReal anotherReal)
 
 bool BigReal::operator>(BigReal anotherReal)
 {
+	BigReal cp = *this;
+	while (cp.decPart.size() < anotherReal.decPart.size()) {
+		cp.decPart.insert(cp.decPart.begin(), 0);
+	}
+	while (cp.decPart.size() > anotherReal.decPart.size()) {
+		anotherReal.decPart.insert(anotherReal.decPart.begin(), 0);
+	}
 	
 	if (intPart > anotherReal.intPart) {
 		return true;
