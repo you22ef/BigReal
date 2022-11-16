@@ -63,14 +63,14 @@ BigReal BigReal::operator+(BigReal other)
 {
 	BigReal result;
 	BigReal cp = *this;
+	while (cp.decPart.size() < other.decPart.size()) {
+		cp.decPart.insert(cp.decPart.begin(), 0);
+	}
+	while (cp.decPart.size() > other.decPart.size()) {
+		other.decPart.insert(other.decPart.begin(), 0);
+	}
 	if (cp.sign() == 1 && other.sign() == 1) {
 		result.intPart = cp.intPart + other.intPart;
-		while (cp.decPart.size() < other.decPart.size()) {
-			cp.decPart.insert(cp.decPart.begin(), 0);
-		}
-		while (cp.decPart.size() > other.decPart.size()) {
-			other.decPart.insert(other.decPart.begin(), 0);
-		}
 		int temp;
 		int carry;
 		for (int i = 0; i < cp.decPart.size(); i++) {
@@ -111,15 +111,15 @@ BigReal BigReal::operator-(BigReal other)
 	BigReal result;
 	BigReal cp = *this;
 
+	while (cp.decPart.size() < other.decPart.size()) {
+		cp.decPart.insert(cp.decPart.begin(), 0);
+	}
+	while (cp.decPart.size() > other.decPart.size()) {
+		other.decPart.insert(other.decPart.begin(), 0);
+	}
 
 	if (cp > other && other.sign() == 1) {
  		result.intPart = cp.intPart - other.intPart;
-		while (cp.decPart.size() < other.decPart.size()) {
-			cp.decPart.insert(cp.decPart.begin(), 0);
-		}
-		while (cp.decPart.size() > other.decPart.size()) {
-			other.decPart.insert(other.decPart.begin(), 0);
-		}
 		for (int i = 0; i < cp.decPart.size(); i++) {
 			if (i < (cp.decPart.size() - 1)) {
 				if (cp.decPart[i] < other.decPart[i]) {
@@ -171,11 +171,14 @@ bool BigReal::operator<(BigReal anotherReal)
 		return false;
 	}
 	else {
-		for (int i = decPart.size() - 1; i >= 0 ; i--) {
-			if (decPart[i] < anotherReal.decPart[i]) {
+		int i = 0;
+		do
+		{
+			if (decPart[decPart.size() - i - 1] < anotherReal.decPart[anotherReal.decPart.size() - i - 1]) {
 				return true;
 			}
-		}
+			i++;
+		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i] && i < decPart.size());
 	}
 
 	return false;
@@ -191,12 +194,15 @@ bool BigReal::operator>(BigReal anotherReal)
 		return false;
 	}
 	else {
-		for (int i = decPart.size() - 1; i >= 0; i--) {
-			if (decPart[i] > anotherReal.decPart[i]) {
+		int i = 0;
+		do
+		{
+			if (decPart[decPart.size() - i - 1] > anotherReal.decPart[anotherReal.decPart.size() - i - 1]) {
 				return true;
 			}
+			i++;
+		} while (decPart[decPart.size() - i] == anotherReal.decPart[anotherReal.decPart.size() - i ] && i < decPart.size());
 
-		}
 	}
 
 	return false;
