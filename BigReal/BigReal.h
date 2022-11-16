@@ -13,10 +13,8 @@ public:
     BigReal(double realNumber = 0); // Default constructor
     BigReal(string realNumber);
     BigReal(BigDecimalInt bigInteger);
-    BigReal(const BigReal& other) :intPart{ other.intPart }, decPart{ other.decPart } {	cout << "cp contr" << endl;
-    };       // Copy constructor
-    BigReal(BigReal&& other) :intPart{ other.intPart }, decPart{ other.decPart } {	cout << "mv contr" << endl;
-    };           // Move constructor
+    BigReal(const BigReal& other) :intPart{ other.intPart }, decPart{ other.decPart } {};       // Copy constructor
+    BigReal(BigReal&& other) :intPart{ other.intPart }, decPart{ other.decPart } {};           // Move constructor
     BigReal& operator=(BigReal& other);  // Assignment operator
     BigReal& operator=(BigReal&& other); // Move assignment
     BigReal operator+(BigReal other);

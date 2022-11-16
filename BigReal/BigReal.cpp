@@ -40,7 +40,6 @@ BigReal::BigReal(BigDecimalInt bigInteger)
 
 BigReal& BigReal::operator=(BigReal& other)
 {
-	cout << "assign" << endl;
 	if (this != &other) {
 		intPart = other.intPart;
 		decPart = other.decPart;
@@ -50,7 +49,6 @@ BigReal& BigReal::operator=(BigReal& other)
 
 BigReal& BigReal::operator=(BigReal&& other)
 {
-	cout << "move assign" << endl;
 	if (this != &other) {
 		intPart = other.intPart;
 		decPart = other.decPart;
