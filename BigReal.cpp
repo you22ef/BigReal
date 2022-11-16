@@ -226,7 +226,7 @@ bool BigReal::operator>(BigReal anotherReal)
 
 int BigReal::size()
 {
-	return intPart.size() + decPart.size();
+	return intPart.size() + decPart.size() + 1;
 }
 
 bool BigReal::operator==(BigReal anotherReal)
@@ -242,7 +242,9 @@ int BigReal::sign()
 
 ostream& operator<<(ostream& out, BigReal& num)
 {
-
+	if(!num.sign()){
+		cout << '-';
+	}
 	out << num.intPart;
 	out << '.';
 	for (int i = num.decPart.size() - 1; i >= 0; i--) {
