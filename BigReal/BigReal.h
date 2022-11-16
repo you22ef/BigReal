@@ -10,13 +10,15 @@ private:
     vector<int> decPart;
 
 public:
-    BigReal(double realNumber=0); // Default constructor
+    BigReal(double realNumber = 0); // Default constructor
     BigReal(string realNumber);
     BigReal(BigDecimalInt bigInteger);
-    //BigReal(BigReal& other);       // Copy constructor
-    //BigReal(BigReal&& other);            // Move constructor
-    //BigReal& operator=(BigReal& other);  // Assignment operator
-    //BigReal& operator=(BigReal&& other); // Move assignment
+    BigReal(const BigReal& other) :intPart{ other.intPart }, decPart{ other.decPart } {	cout << "cp contr" << endl;
+    };       // Copy constructor
+    BigReal(BigReal&& other) :intPart{ other.intPart }, decPart{ other.decPart } {	cout << "mv contr" << endl;
+    };           // Move constructor
+    BigReal& operator=(BigReal& other);  // Assignment operator
+    BigReal& operator=(BigReal&& other); // Move assignment
     BigReal operator+(BigReal other);
     BigReal operator-(BigReal other);
     bool operator<(BigReal anotherReal);
@@ -24,8 +26,8 @@ public:
     bool operator==(BigReal anotherReal);
     int size();
     int sign();
-    friend ostream& operator<<(ostream& out, BigReal num);
-    //friend istream& operator>>(istream& out, BigReal num);
+    friend ostream& operator<<(ostream& out, BigReal& num);
+    friend istream& operator>>(istream& out, BigReal& num);
 };
 
 #endif

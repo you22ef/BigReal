@@ -37,6 +37,30 @@ BigReal::BigReal(BigDecimalInt bigInteger)
 	decPart.push_back(0);
 }
 
+
+BigReal& BigReal::operator=(BigReal& other)
+{
+	cout << "assign" << endl;
+	if (this != &other) {
+		intPart = other.intPart;
+		decPart = other.decPart;
+	}
+	return *this;
+}
+
+BigReal& BigReal::operator=(BigReal&& other)
+{
+	cout << "move assign" << endl;
+	if (this != &other) {
+		intPart = other.intPart;
+		decPart = other.decPart;
+	}
+	return *this;
+}
+
+
+
+
 BigReal BigReal::operator+(BigReal other)
 {
 	BigReal result;
@@ -198,7 +222,7 @@ int BigReal::sign()
 	return intPart.sign();
 }
 
-ostream& operator<<(ostream& out, BigReal num)
+ostream& operator<<(ostream& out, BigReal& num)
 {
 
 	out << num.intPart;
@@ -207,4 +231,13 @@ ostream& operator<<(ostream& out, BigReal num)
 		out << num.decPart[i];
 	}
 	return out;
+}
+
+istream& operator>>(istream& in, BigReal& num)
+{
+	string realNumber;
+	in >> realNumber;
+	num = BigReal(realNumber);
+	return in;
+
 }
