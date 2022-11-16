@@ -163,6 +163,7 @@ string addition(string num1, string num2)
         it1++;
         it2++;
     }
+    carry = 0;
     twoDigitsSum = ((*it1 - '0') + (*it2 - '0'));
     res = char((twoDigitsSum % 10) + '0') + res;
     if (twoDigitsSum >= 10)
