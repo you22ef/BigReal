@@ -74,4 +74,22 @@ int main() {
 		cout << "b1 > b2 : " << (b1 > b2) << '\n';
 		cout << "b1 size : " << b1.size() << '\n';
 	}
+	{
+		cout << "//-----------------test-5--------------\n";
+		BigReal b1("0.999");
+		BigReal b2("0.001");
+
+		BigReal b3 = b1 + b2;
+		BigReal b4 = b1 - b2;
+		BigReal b5 = b2 - b1;
+
+		cout << "b1 = " << b1 << '\n' << "b2 = " << b2 << '\n';
+		cout << "b1 + b2 = " << b3 << '\n';
+		cout << "b1 - b2 = " << b4 << '\n';
+		cout << "b2 - b1 = " << b5 << '\n';
+		cout << "b1 sign is : " << b1.sign() << '\n';
+		cout << "b1 < b2 : " << (b1 < b2) << '\n';
+		cout << "b1 > b2 : " << (b1 > b2) << '\n';
+		cout << "b1 size : " << b1.size() << '\n';
+	}
 }
